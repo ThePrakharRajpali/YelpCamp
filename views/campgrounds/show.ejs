@@ -1,0 +1,68 @@
+<%- include("../partials/header") %>
+<div class="row">
+    <div class="col-md-3">
+        <p class="lead">YelpCamp</p>
+        <div class="list-group">
+            <li class="list-group-item">info 1</li>
+            <li class="list-group-item">info 2</li>
+            <li class="list-group-item">info 3</li>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card mb-3">
+            <img class="card-img-top" src="<%= campground.image %>" alt="">
+            <div class="card-body">
+                <h4 class="card-title"> <%= campground.name %> </h4>
+                <h5 class="card-text text-right"> $<%= campground.price %>/night </h5>
+                <p class="card-text lead"><%= campground.description %></p>
+                <p class="card-text"><em> Submitted by <%= campground.author.username %></em></p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
+                <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+                    <a class="btn btn-sm btn-outline-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                    <form class="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+                        <button class="btn btn-sm btn-outline-danger" type="submit" name="button">Delete</button>
+                    </form>
+                <% } %>
+            </div>
+        </div>
+        <div class="card bg-light mb-3">
+            <div class="text-right">
+                <a class="btn btn-outline-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+            </div>
+            <ul class="list-group list-group-flush bg-light ">
+                <% campground.comments.forEach((comment) => { %>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="card-text"><strong><%= comment.author.username %></strong></p> <p class="card-text float-right"> <small class="text-right text-muted">10 days ago</small></p>
+                                <p class="card-text">
+                                    <%= comment.text %>
+                                </p>
+
+
+                                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+
+                                    <a class="btn btn-sm btn-outline-warning"
+                                    href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">
+                                        Edit
+                                    </a>
+
+                                    <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+                                        <button class="btn btn-sm btn-outline-danger" type="submit" name="button">Delete</button>
+                                    </form>
+
+                                <% } %>
+                            </div>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+<%- include("../partials/footer") %>
