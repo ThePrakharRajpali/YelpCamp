@@ -26,6 +26,10 @@ mongoose.connect("mongodb+srv://Prakhar:Prakhar@2000@cluster0.jsium.mongodb.net/
     useUnifiedTopology: true,
 
     useFindAndModify: false
+}).then(() => {
+    console.log("Connected to Database");
+}).catch(err => {
+    console.log(err.message);
 });
 
 app.use(bodyParser.urlencoded({extended: true}));
