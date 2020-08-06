@@ -18,7 +18,7 @@ const Comment          = require("./models/comment");
 const User             = require("./models/user");
 
 const seedDB        = require("./seeds");
-mongoose.connect("mongodb+srv://Prakhar:Prakhar@2000@cluster0.jsium.mongodb.net/yelpcamp?retryWrites=true&w=majority",{
+mongoose.connect(process.env.DATABASEURL, {
     useNewUrlParser: true,
 
     useCreateIndex: true,
@@ -31,6 +31,8 @@ mongoose.connect("mongodb+srv://Prakhar:Prakhar@2000@cluster0.jsium.mongodb.net/
 }).catch(err => {
     console.log(err.message);
 });
+// console.log(process.env.DATABASEURL);
+//mongodb+srv://Prakhar:Prakhar@2000@cluster0.jsium.mongodb.net/yelpcamp?retryWrites=true&w=majority
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
