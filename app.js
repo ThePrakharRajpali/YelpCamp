@@ -6,7 +6,7 @@ const mongoose         = require("mongoose");
 const express          = require("express");
 const flash            = require('connect-flash');
 const app              = express();
-const port             = 3000;
+const port             = process.env.PORT || 3000;
 
 
 const campgroundRoutes = require("./routes/campgrounds");
@@ -18,7 +18,9 @@ const Comment          = require("./models/comment");
 const User             = require("./models/user");
 
 const seedDB        = require("./seeds");
-mongoose.connect(process.env.DATABASEURL, {
+
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp";
+mongoose.connect(url, {
     useNewUrlParser: true,
 
     useCreateIndex: true,
@@ -67,6 +69,6 @@ app.use("/campgrounds",campgroundRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
 
 
-app.listen(process.env.PORT, process.env.IP,() => {
+app.listen(port, process.env.IP,() => {
     console.log("Server Started at http://localhost:3000");
 });
